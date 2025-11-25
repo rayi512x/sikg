@@ -11,19 +11,46 @@ if ($_SESSION['role'] === 'admin') {
   exit;
 }
 
+include '../koneksi.php';
+
+function writedb($update, $conn) {
+  if ($update === true) {
+    $sql_delete = "DELETE FROM absensi WHERE id = ?";
+    $conn->execute_query($sql_delete, [$_SESSION['old_id']]);
+  }
+
+  $sql_insert = "INSERT INTO absensi (nip_guru, tanggal, keterangan, catatan) VALUES (?, ?, ?, ?)";
+  $conn->execute_query($sql_insert, [$_SESSION['nip'], $_SESSION['date'], $_SESSION['keterangan'], $_SESSION['catatan']]);
+
+  header("Location: guru.php?status=0");
+  exit;
+}
+
+function savesession($date, $keterangan, $catatan) {
+  $_SESSION['date'] = $date;
+  $_SESSION['keterangan'] = $keterangan;
+  $_SESSION['catatan'] = $catatan;
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $nip = $_SESSION['nip'];
   $date = $_POST['date'];
   $keterangan = $_POST['keterangan'];
   $catatan = $_POST['catatan'];
 
-  include '../koneksi.php';
+  savesession($date, $keterangan, $catatan);
 
-  $sql_insert = "INSERT INTO absensi (nip_guru, tanggal, keterangan, catatan) VALUES (?, ?, ?, ?)";
-  $result = $conn->execute_query($sql_insert, [$nip, $date, $keterangan, $catatan]);
+  $sql_select = "SELECT id FROM absensi WHERE nip_guru = ? AND tanggal = ?";
+  $result = $conn->execute_query($sql_select, [$nip, $date]);
 
-  header("Location: guru.php?success=1");
-  exit;
+  if ($result->num_rows === 0) {
+    writedb(false, $conn);
+  } else {
+    $row = $result->fetch_assoc();
+    $_SESSION['old_id'] = $row['id'];
+    header("Location: guru.php?status=1");
+    exit;
+  }
 }
 
 ?>
@@ -76,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
-    <?php if ($_GET['success']) : ?>
+    <?php if ($_GET['status'] === '0') : ?>
 <script>
   Swal.fire({
     title: "Sukses",
@@ -84,6 +111,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     icon: "success"
   });
 </script>
-    <?php endif; ?>
+    <?php elseif ($_GET['status'] === '1') : ?>
+    <script>
+Swal.fire({
+  text: "Data dengan NIP dan tanggal yang sama ditemukan dalam database. Perbarui?",
+  icon: "info",
+  showDenyButton: true,
+  confirmButtonText: "Perbarui",
+  denyButtonText: "Batal"
+}).then((result) => {
+  if (result.isConfirmed) {
+    window.location.href = 'guru.php?status=2';
+  } else if (result.isDenied) {
+    Swal.fire("Perubahan tidak disimpan", "", "info");
+  }
+});
+</script>
+    <?php elseif ($_GET['status'] === '2') : writedb(true, $conn); endif; ?>
   </body>
 </html>
