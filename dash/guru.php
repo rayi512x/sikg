@@ -11,6 +11,21 @@ if ($_SESSION['role'] === 'admin') {
   exit;
 }
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $nip = $_SESSION['nip'];
+  $date = $_POST['date'];
+  $keterangan = $_POST['keterangan'];
+  $catatan = $_POST['catatan'];
+
+  include '../koneksi.php';
+
+  $sql = "INSERT INTO absensi (nip_guru, tanggal, keterangan, catatan) VALUES (?, ?, ?, ?)";
+  $result = $conn->execute_query($sql, [$nip, $date, $keterangan, $catatan]);
+
+  header("Location: guru.php?success=1");
+  exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,5 +49,18 @@ if ($_SESSION['role'] === 'admin') {
         </tr>
       </table>
     </div>
+
+    <form action="guru.php" method="POST">
+      <label for="date">Tanggal</label><br>
+      <input type="date" id="date" name="date" value="<?php echo date('Y-m-d'); ?>" readonly><br>
+      <label for="keterangan">Keterangan</label><br>
+      <input type="radio" name="keterangan" id="keterangan" value="H" checked>Hadir<br>
+      <input type="radio" name="keterangan" id="keterangan" value="I">Izin<br>
+      <input type="radio" name="keterangan" id="keterangan" value="S">Sakit<br>
+      <label for="catatan">Catatan (Opsional)</label><br>
+      <input type="text" name="catatan" id="catatan"><br>
+      <input type="submit" value="Submit">
+    </form>
+
   </body>
 </html>
