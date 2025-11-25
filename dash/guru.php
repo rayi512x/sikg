@@ -62,5 +62,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <input type="submit" value="Submit">
     </form>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <?php if ($_GET['success']) : ?>
+<script>
+  Swal.fire({
+    title: "Sukses",
+    text: "Data absensi berhasil dicatat",
+    icon: "success"
+  });
+</script>
+    <?php endif; ?>
   </body>
 </html>

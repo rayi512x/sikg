@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p style="color: red;">NIP atau password salah. Silakan coba lagi.</p>
           <?php endif;?>
         <form action="guru.php" method="POST">
-          <input type="text" id="nip" name="nip" placeholder="NIP" class="textfield" required>
+          <input type="text" id="nip" name="nip" placeholder="NIP" class="textfield" required><br>
           <input type="password" id="password" name="password" placeholder="Password" class="textfield" required>
           <div class="btn-container">
             <a class="btn" href="..">&lt; Kembali</a>
