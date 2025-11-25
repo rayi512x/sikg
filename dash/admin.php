@@ -98,11 +98,12 @@ $conn->close();
       </table>
     </div>
 
+    <div class="center-horizontally">
     <h2>Tabel Absensi</h2>
     <form action="admin.php" method="GET">
-      <label for="date">Tanggal</label>
-      <input type="date" id="date" name="date" value="<?php echo $date; ?>">
-      <input type="submit" value="Submit">
+      <label for="date">Tanggal:</label>
+      <input type="date" id="date" name="date" class="textfield" value="<?php echo $date; ?>">
+      <input type="submit" class="btn" value="Cari">
     </form>
     <table border="1">
       <thead>
@@ -174,15 +175,16 @@ foreach ($guru as $row) {
       <input type="password" id="password" name="password" placeholder="Password" required><br>
       <input type="text" id="alamat" name="alamat" placeholder="Alamat" required><br>
       <input type="number" id="no_telp" name="no_telp" placeholder="Nomor Telepon" required><br>
-      <input style="display: none;" type="text" id="action" name="action" value="add" readonly>
+      <input type="hidden" id="action" name="action" value="add" readonly>
       <input type="submit" value="Submit">
     </form>
 
     <h3>Hapus Guru</h3>
     <form action="admin.php" method="POST">
       <input type="number" id="nip" name="nip" placeholder="NIP" required><br>
-      <input style="display: none;" type="text" id="action" name="action" value="del" readonly>
+      <input type="hidden" id="action" name="action" value="del" readonly>
       <input type="submit" value="Submit">
     </form>
+    </div>
   </body>
 </html>

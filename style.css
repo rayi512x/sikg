@@ -10,6 +10,11 @@
   height: 100vh;
 }
 
+.center-horizontally {
+  display: grid;
+  place-items: center;
+}
+
 .card {
   padding: 25px;
   text-align: center;
@@ -34,7 +39,7 @@
 }
 
 .btn-container {
-  margin-top: 40px;
+  margin-top: 20px;
   margin-bottom: 20px;
 }
 
@@ -56,7 +61,7 @@
   border-radius: 10px;
   border: none;
   background-color: #ccc;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 
 .topbar {
@@ -73,4 +78,14 @@
 
 .topbar a {
   margin-left: 20px;
+}
+
+.input-container {
+  margin-top: 20px;
+}
+
+.catatan {
+  text-align: center;
+  width: 200px;
+  height: 80px;
 }
