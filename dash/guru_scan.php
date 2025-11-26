@@ -86,25 +86,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
 <script>
-function onScanSuccess(decodedText, decodedResult) {
+const html5QrCode = new Html5Qrcode("reader");
+const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    /* handle success */
   document.getElementById('token').value = decodedText;
 <?php if ($_GET['update'] === '1') : ?>
   document.getElementById('update').value = 1;
 <?php endif; ?>
   document.getElementById('form').submit();
-}
+};
+const config = { fps: 10, qrbox: { width: 250, height: 250 } };
 
-function onScanFailure(error) {
-  // handle scan failure, usually better to ignore and keep scanning.
-  // for example:
-  console.warn(`Code scan error = ${error}`);
-}
-
-let html5QrcodeScanner = new Html5QrcodeScanner(
-  "reader",
-  { fps: 10, qrbox: {width: 250, height: 250} },
-  /* verbose= */ false);
-html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+// If you want to prefer back camera
+html5QrCode.start({ facingMode: "environment" }, config, qrCodeSuccessCallback);
 </script>
   </body>
 </html>

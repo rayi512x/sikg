@@ -48,7 +48,7 @@ $conn->close();
   </head>
   <body class="center" style="background-color: white;">
     <div style="text-align: center;">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?data=<?php echo $token; ?>">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=<?php echo $token; ?>" height="300px">
       <h1 style="margin: 50px;">Kode QR Sistem Informasi Kehadiran Guru</h1>
       <p id="countdown">30</p>
     </div>
