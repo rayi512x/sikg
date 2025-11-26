@@ -157,7 +157,7 @@ if ($absensi->num_rows > 0) {
         <button onclick="displayHapusGuru()" class="btn">Hapus Guru</button>
       </div>
 
-      <div class="form-container" id="form-tambah-guru" <?php if ($_GET['status'] === '0') echo 'style="display: grid;"'; ?>>
+      <div class="form-container" id="form-tambah-guru" <?php if ($_GET['status'] === '0') echo 'style="display: grid;"'; else echo 'style="display: none;"'; ?>>
 <?php if ($_GET['status'] === '0') echo '<p>Berhasil menambahkan guru</p>'; ?>
     <h3>Tambah Guru</h3>
     <form action="admin.php" method="POST">
@@ -171,7 +171,7 @@ if ($absensi->num_rows > 0) {
     </form>
     </div>
 
-    <div class="form-container" id="form-hapus-guru" <?php if ($_GET['status'] === '1') echo 'style="display: grid;"'; ?>>
+    <div class="form-container" id="form-hapus-guru" <?php if ($_GET['status'] === '1') echo 'style="display: grid;"'; else echo 'style="display: none;"'; ?>>
 <?php if ($_GET['status'] === '1') echo '<p>Berhasil menghapus guru</p>'; ?>
     <h3>Hapus Guru</h3>
     <form action="admin.php" method="POST">
@@ -207,32 +207,29 @@ foreach ($guru as $row) {
     </div>
 
 <script>
+function displayForm(form, form_lain) {
+  if (form.style.display === 'none') {
+    form.style.display = 'grid';
+    if (form_lain.style.display !== 'none') {
+      form_lain.style.display = 'none';
+    }
+  } else {
+    form.style.display = 'none';
+  }
+}
+
 function displayTambahGuru() {
   let form = document.getElementById("form-tambah-guru");
   let form_lain = document.getElementById("form-hapus-guru");
 
-  if (form.style.display !== 'none') {
-    form.style.display = 'none';
-  } else {
-    if (form_lain.style.display !== 'none') {
-      form_lain.style.display = 'none';
-    }
-    form.style.display = 'grid';
-  }
+  displayForm(form, form_lain);
 }
 
 function displayHapusGuru() {
   let form = document.getElementById("form-hapus-guru");
   let form_lain = document.getElementById("form-tambah-guru");
 
-  if (form.style.display !== 'none') {
-    form.style.display = 'none';
-  } else {
-    if (form_lain.style.display !== 'none') {
-      form_lain.style.display = 'none';
-    }
-    form.style.display = 'grid';
-  }
+  displayForm(form, form_lain);
 }
 </script>
 
