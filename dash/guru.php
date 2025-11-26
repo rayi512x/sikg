@@ -14,6 +14,16 @@ if ($_SESSION['role'] === 'admin') {
 include '../koneksi.php';
 
 function writedb($update, $conn) {
+  if ($_SESSION['keterangan'] === 'H') {
+    if ($update === true) {
+      header("Location: guru_scan.php?update=1");
+      exit;
+    } else {
+      header("Location: guru_scan.php");
+      exit;
+    }
+  }
+
   if ($update === true) {
     $sql_update = "UPDATE absensi SET keterangan = ?, catatan = ? WHERE id = ?";
     $conn->execute_query($sql_update, [$_SESSION['keterangan'], $_SESSION['catatan'], $_SESSION['old_id']]);

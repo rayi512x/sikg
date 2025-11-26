@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // ambil semua nip dan nama guru
 $guru_array = array();
-$guru_sql = 'SELECT nip, nama, alamat, no_telp FROM guru';
+$guru_sql = 'SELECT nip, nama, alamat, no_telp FROM guru ORDER BY nama';
 $guru = $conn->execute_query($guru_sql);
 if ($guru->num_rows > 0) {
   foreach ($guru as $row) {
@@ -107,6 +107,7 @@ $conn->close();
       <label for="date">Tanggal:</label>
       <input type="date" id="date" name="date" class="textfield" value="<?php echo $date; ?>">
       <input type="submit" class="btn" value="Cari">
+      <a class="btn" href="admin_qrgen.php">Panel kode QR</a>
     </form>
     <table border="1">
       <thead>
