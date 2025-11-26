@@ -89,3 +89,38 @@
   width: 200px;
   height: 80px;
 }
+
+#form-tambah-guru {
+  display: none;
+}
+
+#form-hapus-guru {
+  display: none;
+}
+
+.form-container {
+  margin-bottom: 20px;
+}
+
+.form-container p {
+  color: green;
+  margin-bottom: 5px;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+thead {
+  font-weight: bold;
+  background-color: green;
+  color: white;
+}
+
+td {
+  padding: 5px;
+}
+
+table {
+  border-collapse: collapse;
+}

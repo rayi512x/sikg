@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
       $sql = 'INSERT INTO guru VALUES (?, ?, ?, ?, ?, ?)';
       $conn->execute_query($sql, [$nip, $nama, $password, $alamat, $no_telp, $nip_admin]);
-      header("Location: admin.php");
+      header("Location: admin.php?status=0");
       exit;
       break;
 
@@ -35,6 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $nip = htmlspecialchars_decode($_POST['nip']);
       $sql = 'DELETE FROM guru WHERE nip = ?';
       $conn->execute_query($sql, [$nip]);
+      header("Location: admin.php?status=1");
+      exit;
       break;
     
     default:
@@ -99,6 +101,7 @@ $conn->close();
     </div>
 
     <div class="center-horizontally">
+    <div class="table-container">
     <h2>Tabel Absensi</h2>
     <form action="admin.php" method="GET">
       <label for="date">Tanggal:</label>
@@ -144,8 +147,40 @@ if ($absensi->num_rows > 0) {
 }
       ?>
     </table>
+    </div>
 
+    <div class="table-container">
     <h2>Tabel Seluruh Guru</h2>
+
+      <div class="btn-container">
+        <button onclick="displayTambahGuru()" class="btn">Tambah Guru</button>
+        <button onclick="displayHapusGuru()" class="btn">Hapus Guru</button>
+      </div>
+
+      <div class="form-container" id="form-tambah-guru" <?php if ($_GET['status'] === '0') echo 'style="display: grid;"'; ?>>
+<?php if ($_GET['status'] === '0') echo '<p>Berhasil menambahkan guru</p>'; ?>
+    <h3>Tambah Guru</h3>
+    <form action="admin.php" method="POST">
+      <input type="number" id="nip" name="nip" placeholder="NIP" class="textfield" required><br>
+      <input type="text" id="nama" name="nama" placeholder="Nama" class="textfield" required><br>
+      <input type="password" id="password" name="password" placeholder="Password" class="textfield" required><br>
+      <input type="text" id="alamat" name="alamat" placeholder="Alamat" class="textfield" required><br>
+      <input type="number" id="no_telp" name="no_telp" placeholder="Nomor Telepon" class="textfield" required>
+      <input type="hidden" id="action" name="action" value="add" readonly>
+      <input type="submit" class="btn" value="Tambah">
+    </form>
+    </div>
+
+    <div class="form-container" id="form-hapus-guru" <?php if ($_GET['status'] === '1') echo 'style="display: grid;"'; ?>>
+<?php if ($_GET['status'] === '1') echo '<p>Berhasil menghapus guru</p>'; ?>
+    <h3>Hapus Guru</h3>
+    <form action="admin.php" method="POST">
+      <input type="number" id="nip" name="nip" placeholder="NIP" class="textfield" required>
+      <input type="hidden" id="action" name="action" value="del" readonly>
+      <input type="submit" value="Hapus" class="btn">
+    </form>
+    </div>
+
     <table border="1">
       <thead>
           <td>NIP</td>
@@ -167,24 +202,39 @@ foreach ($guru as $row) {
       ?>
       </tbody>
     </table>
+      </div>
     
-    <h3>Tambah Guru</h3>
-    <form action="admin.php" method="POST">
-      <input type="number" id="nip" name="nip" placeholder="NIP" required><br>
-      <input type="text" id="nama" name="nama" placeholder="Nama" required><br>
-      <input type="password" id="password" name="password" placeholder="Password" required><br>
-      <input type="text" id="alamat" name="alamat" placeholder="Alamat" required><br>
-      <input type="number" id="no_telp" name="no_telp" placeholder="Nomor Telepon" required><br>
-      <input type="hidden" id="action" name="action" value="add" readonly>
-      <input type="submit" value="Submit">
-    </form>
-
-    <h3>Hapus Guru</h3>
-    <form action="admin.php" method="POST">
-      <input type="number" id="nip" name="nip" placeholder="NIP" required><br>
-      <input type="hidden" id="action" name="action" value="del" readonly>
-      <input type="submit" value="Submit">
-    </form>
     </div>
+
+<script>
+function displayTambahGuru() {
+  let form = document.getElementById("form-tambah-guru");
+  let form_lain = document.getElementById("form-hapus-guru");
+
+  if (form.style.display !== 'none') {
+    form.style.display = 'none';
+  } else {
+    if (form_lain.style.display !== 'none') {
+      form_lain.style.display = 'none';
+    }
+    form.style.display = 'grid';
+  }
+}
+
+function displayHapusGuru() {
+  let form = document.getElementById("form-hapus-guru");
+  let form_lain = document.getElementById("form-tambah-guru");
+
+  if (form.style.display !== 'none') {
+    form.style.display = 'none';
+  } else {
+    if (form_lain.style.display !== 'none') {
+      form_lain.style.display = 'none';
+    }
+    form.style.display = 'grid';
+  }
+}
+</script>
+
   </body>
 </html>

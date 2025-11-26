@@ -15,12 +15,12 @@ include '../koneksi.php';
 
 function writedb($update, $conn) {
   if ($update === true) {
-    $sql_delete = "DELETE FROM absensi WHERE id = ?";
-    $conn->execute_query($sql_delete, [$_SESSION['old_id']]);
+    $sql_update = "UPDATE absensi SET keterangan = ?, catatan = ? WHERE id = ?";
+    $conn->execute_query($sql_update, [$_SESSION['keterangan'], $_SESSION['catatan'], $_SESSION['old_id']]);
+  } else {
+    $sql_insert = "INSERT INTO absensi (nip_guru, tanggal, keterangan, catatan) VALUES (?, ?, ?, ?)";
+    $conn->execute_query($sql_insert, [$_SESSION['nip'], $_SESSION['date'], $_SESSION['keterangan'], $_SESSION['catatan']]);
   }
-
-  $sql_insert = "INSERT INTO absensi (nip_guru, tanggal, keterangan, catatan) VALUES (?, ?, ?, ?)";
-  $conn->execute_query($sql_insert, [$_SESSION['nip'], $_SESSION['date'], $_SESSION['keterangan'], $_SESSION['catatan']]);
 
   header("Location: guru.php?status=0");
   exit;
