@@ -46,11 +46,11 @@ $conn->close();
     <title>Kode QR SIKG</title>
     <link href="../style.css" rel="stylesheet">
   </head>
-  <body class="center" style="background-color: white;">
+  <body class="center" style="background-color: black;">
     <div style="text-align: center;">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&bgcolor=ffffff&color=000000&data=<?php echo $token; ?>" height="300px">
-      <h1 style="margin: 50px; color: black;">Kode QR Sistem Informasi Kehadiran Guru</h1>
-      <p id="countdown" style="color: black;">30</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&margin=20&data=<?php echo $token; ?>" height="300px">
+      <h1 style="margin: 50px; color: whitesmoke;">Kode QR Sistem Informasi Kehadiran Guru</h1>
+      <p id="countdown" style="color: white;">30</p>
     </div>
 
 <script>
