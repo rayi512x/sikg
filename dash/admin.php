@@ -106,10 +106,11 @@ $conn->close();
     <form action="admin.php" method="GET">
       <label for="date">Tanggal:</label>
       <input type="date" id="date" name="date" class="textfield" value="<?php echo $date; ?>">
-      <input type="submit" class="btn" value="Cari">
-      <a class="btn" href="admin_qrgen.php">Panel kode QR</a>
+      <input type="submit" class="btn" value="Ganti tangal">
+      <a class="btn" href="admin_qrgen.php">Panel kode QR</a><br>
+      <input type="text" placeholder="Cari dari nama..." class="textfield table-filter" data-table="absensi" style="margin-bottom: 5px;">
     </form>
-    <table border="1">
+    <table border="1" class="absensi">
       <thead>
         <td>NIP</td>
         <td>Nama</td>
@@ -156,6 +157,7 @@ if ($absensi->num_rows > 0) {
       <div class="btn-container">
         <button onclick="displayTambahGuru()" class="btn">Tambah Guru</button>
         <button onclick="displayHapusGuru()" class="btn">Hapus Guru</button>
+        <input type="text" placeholder="Cari dari nama..." class="textfield table-filter" data-table="tabel-data-guru">
       </div>
 
       <div class="form-container" id="form-tambah-guru" <?php if ($_GET['status'] === '0') echo 'style="display: grid;"'; else echo 'style="display: none;"'; ?>>
@@ -182,7 +184,7 @@ if ($absensi->num_rows > 0) {
     </form>
     </div>
 
-    <table border="1">
+    <table border="1" class="tabel-data-guru">
       <thead>
           <td>NIP</td>
           <td>Nama</td>
@@ -232,6 +234,43 @@ function displayHapusGuru() {
 
   displayForm(form, form_lain);
 }
+
+(function() {
+  'use strict';
+
+  var TableFilter = (function() {
+    var Arr = Array.prototype;
+    var input;
+
+    function onInputEvent(e) {
+      input = e.target;
+      var table1 = document.getElementsByClassName(input.getAttribute('data-table'));
+      Arr.forEach.call(table1, function(table) {
+        Arr.forEach.call(table.tBodies, function(tbody) {
+          Arr.forEach.call(tbody.rows, filter);
+        });
+      });
+    }
+
+    function filter(row) {
+      var text = row.textContent.toLowerCase();
+      var val = input.value.toLowerCase();
+      row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+    }
+
+    return {
+      init: function() {
+        var inputs = document.getElementsByClassName('table-filter');
+        Arr.forEach.call(inputs, function(input) {
+          input.oninput = onInputEvent;
+        });
+      }
+    };
+
+  })();
+
+ TableFilter.init();
+})();
 </script>
 
   </body>
