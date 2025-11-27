@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Guru SIKG</title>
+    <title>Scan QR SIKG</title>
     <link href="../style.css" rel="stylesheet">
   </head>
   <body>

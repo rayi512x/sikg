@@ -108,7 +108,7 @@ $conn->close();
       <input type="date" id="date" name="date" class="textfield" value="<?php echo $date; ?>">
       <input type="submit" class="btn" value="Ganti tangal">
       <a class="btn" href="admin_qrgen.php">Panel kode QR</a><br>
-      <input type="text" placeholder="Cari dari nama..." class="textfield table-filter" data-table="absensi" style="margin-bottom: 5px;">
+      <input type="text" placeholder="Cari..." class="textfield table-filter" data-table="absensi" style="margin-bottom: 5px;">
     </form>
     <table border="1" class="absensi">
       <thead>
@@ -157,7 +157,7 @@ if ($absensi->num_rows > 0) {
       <div class="btn-container">
         <button onclick="displayTambahGuru()" class="btn">Tambah Guru</button>
         <button onclick="displayHapusGuru()" class="btn">Hapus Guru</button>
-        <input type="text" placeholder="Cari dari nama..." class="textfield table-filter" data-table="tabel-data-guru">
+        <input type="text" placeholder="Cari..." class="textfield table-filter" data-table="tabel-data-guru">
       </div>
 
       <div class="form-container" id="form-tambah-guru" <?php if ($_GET['status'] === '0') echo 'style="display: grid;"'; else echo 'style="display: none;"'; ?>>

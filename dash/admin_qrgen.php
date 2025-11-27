@@ -43,14 +43,14 @@ $conn->close();
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Dashboard Admin SIKG</title>
+    <title>Kode QR SIKG</title>
     <link href="../style.css" rel="stylesheet">
   </head>
   <body class="center" style="background-color: white;">
     <div style="text-align: center;">
-      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=<?php echo $token; ?>" height="300px">
-      <h1 style="margin: 50px;">Kode QR Sistem Informasi Kehadiran Guru</h1>
-      <p id="countdown">30</p>
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&bgcolor=ffffff&color=000000&data=<?php echo $token; ?>" height="300px">
+      <h1 style="margin: 50px; color: black;">Kode QR Sistem Informasi Kehadiran Guru</h1>
+      <p id="countdown" style="color: black;">30</p>
     </div>
 
 <script>
