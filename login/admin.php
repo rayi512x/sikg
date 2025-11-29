@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   include '../koneksi.php';
 
   // cek jika ada nip dan password yang sama di database
-  $admin_sql = 'SELECT * FROM admin WHERE nip = ? AND password_hash = ?';
+  $admin_sql = 'SELECT * FROM admin INNER JOIN jabatan ON admin.jabatan = jabatan.id WHERE nip = ? AND password_hash = ?';
   $admin = $conn->execute_query($admin_sql, [$nip, $password_hash]);
 
   // jika ada,
@@ -30,20 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $admin_row = $admin->fetch_assoc(); // jadikan array yang bisa diakses dengan mudah
     $admin_nip = $admin_row['nip'];
     $admin_name = $admin_row['nama'];
-    $admin_jabatan = $admin_row['jabatan'];
-
-    // cek jabatan admin
-    $jabatan_sql = 'SELECT * FROM jabatan WHERE id = ?';
-    $jabatan_query = $conn->execute_query($jabatan_sql, [$admin_jabatan]);
-    $jabatan_row = $jabatan_query->fetch_assoc();
-    $jabatan = $jabatan_row['nama'];
+    $admin_jabatan = $admin_row['title'];
 
     // session
     $_SESSION['loggedin'] = true;
     $_SESSION['role'] = 'admin';
     $_SESSION['nip'] = $admin_nip;
     $_SESSION['name'] = $admin_name;
-    $_SESSION['jabatan'] = $jabatan;
+    $_SESSION['jabatan'] = $admin_jabatan;
 
     $conn->close();
     header("Location: ../dash/admin.php");
