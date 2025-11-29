@@ -124,18 +124,21 @@ if ($absensi->num_rows > 0) {
     echo '<tr>';
     echo '<td>' . $nip . '</td>';
     echo '<td>' . $nama . '</td>';
-    echo '<td>';
     switch ($guru_keterangan_array[$nip]) {
       case 'H':
+        echo '<td style="background-color: lightgreen;">';
         echo 'Hadir';
         break;
       case 'I':
+        echo '<td style="background-color: yellow;">';
         echo 'Izin';
         break;
       case 'S':
+        echo '<td style="background-color: yellow;">';
         echo 'Sakit';
         break;
       default:
+        echo '<td style="background-color: lightgray;">';
         echo 'Belum Mengisi';
         break;
     }
