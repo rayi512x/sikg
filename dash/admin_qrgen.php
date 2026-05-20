@@ -13,9 +13,6 @@ if ($_SESSION['role'] === 'guru') {
 
 include '../koneksi.php';
 
-$sql_delete = "DELETE FROM secret";
-$conn->execute_query($sql_delete);
-
 function getRandomString($n)
 {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -31,8 +28,14 @@ function getRandomString($n)
 
 $token = getRandomString(64);
 
+$conn->execute_query("START TRANSACTION");
+
+$sql_delete = "DELETE FROM secret";
+$conn->execute_query($sql_delete);
 $sql_insert = "INSERT INTO secret (token) VALUES (?)";
 $conn->execute_query($sql_insert, [$token]);
+
+$conn->execute_query("COMMIT");
 
 $conn->close();
 
